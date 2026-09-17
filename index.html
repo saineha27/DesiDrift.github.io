@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Desi Drift — Discover India's most breathtaking destinations, iconic flavours, and unforgettable experiences. Plan your perfect Indian journey." />
+  <meta name="keywords" content="India travel, Indian destinations, Indian food, Rajasthan, Kerala, Goa, Himalayas, travel guide" />
+  <meta property="og:title" content="Desi Drift — Wander India" />
+  <meta property="og:description" content="From the snow-capped Himalayas to the golden beaches of Goa — discover India's most breathtaking destinations." />
+  <meta property="og:type" content="website" />
+  <title>Desi Drift — Wander India</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav id="mainNav">
+  <a class="logo" onclick="scrollToTop()">Desi<span>Drift</span></a>
+  <ul>
+    <li><a onclick="scrollToSection('destinations')" class="nav-link">Destinations</a></li>
+    <li><a onclick="scrollToSection('food')"         class="nav-link">Food</a></li>
+    <li><a onclick="scrollToSection('experiences')"  class="nav-link">Experiences</a></li>
+    <li><a onclick="scrollToSection('plan')"         class="nav-link">About</a></li>
+    <li><a onclick="scrollToSection('plan')"         class="nav-btn nav-link">Plan Trip</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMobileMenu()" aria-label="Open menu" role="button" tabindex="0">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══════════════════ MOBILE MENU ═══════════════════ -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true">
+  <button class="mobile-menu-close" onclick="toggleMobileMenu()" aria-label="Close menu">✕</button>
+  <a onclick="scrollToSection('destinations'); toggleMobileMenu()">Destinations</a>
+  <a onclick="scrollToSection('food');         toggleMobileMenu()">Food</a>
+  <a onclick="scrollToSection('experiences');  toggleMobileMenu()">Experiences</a>
+  <a onclick="scrollToSection('plan');         toggleMobileMenu()">Plan Trip</a>
+</div>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="mandala-decor" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">🪔 Incredible India Awaits</div>
+    <h1>Wander into the<br/><em>Heart of Bharat</em></h1>
+    <p>From the snow-capped Himalayas to the golden beaches of Goa — discover India's most breathtaking destinations and the iconic flavours that make each place unforgettable.</p>
+
+    <div class="hero-btns">
+      <a class="btn-primary" onclick="scrollToSection('destinations')">Explore Places</a>
+      <a class="btn-outline" onclick="scrollToSection('food')">Discover Food</a>
+    </div>
+
+    <div class="search-bar" style="position:relative;">
+      <span aria-hidden="true">🔍</span>
+      <input
+        type="text"
+        id="heroSearch"
+        placeholder="Search a city, state, or dish..."
+        oninput="handleSearch(this.value)"
+        autocomplete="off"
+        aria-label="Search destinations and dishes"
+      />
+      <button onclick="triggerSearch()">Search</button>
+      <div class="search-dropdown" id="searchDropdown" role="listbox"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ STATS BAR ═══════════════════ -->
+<div class="stats-bar" aria-label="Site statistics">
+  <div class="stat-item">
+    <div class="num" data-target="28">0</div>
+    <div class="label">States Covered</div>
+  </div>
+  <div class="stat-item">
+    <div class="num" data-target="500">0</div>
+    <div class="label">Best Places</div>
+  </div>
+  <div class="stat-item">
+    <div class="num" data-target="1200">0</div>
+    <div class="label">Local Dishes</div>
+  </div>
+  <div class="stat-item">
+    <div class="num" data-target="50000">0</div>
+    <div class="label">Happy Drifters</div>
+  </div>
+</div>
+
+<!-- ═══════════════════ DESTINATIONS ═══════════════════ -->
+<section class="destinations" id="destinations">
+  <div class="dest-header">
+    <span class="section-tag">✦ Top Destinations</span>
+    <h2 class="section-title">Best Places to<br/>Drift Through</h2>
+    <p class="section-subtitle">Handpicked gems from every corner of India — each with its own story, culture, and cuisine waiting to be discovered.</p>
+
+    <div class="filter-tabs" id="destFilters" role="tablist" aria-label="Filter destinations">
+      <button class="filter-tab active" onclick="filterDest('all', this)"        role="tab">All</button>
+      <button class="filter-tab"        onclick="filterDest('heritage', this)"   role="tab">Heritage</button>
+      <button class="filter-tab"        onclick="filterDest('nature', this)"     role="tab">Nature</button>
+      <button class="filter-tab"        onclick="filterDest('beach', this)"      role="tab">Beaches</button>
+      <button class="filter-tab"        onclick="filterDest('mountain', this)"   role="tab">Mountains</button>
+      <button class="filter-tab"        onclick="filterDest('spiritual', this)"  role="tab">Spiritual</button>
+    </div>
+  </div>
+
+  <div class="dest-grid" id="destGrid">
+
+    <!-- Agra (large card) -->
+    <div class="dest-card large" data-category="heritage" onclick="openDestModal('agra')">
+      <div class="card-img-placeholder" style="background: linear-gradient(160deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%); height: 100%; min-height: 500px;">
+        <span style="font-size: 8rem; position: absolute;">🕌</span>
+        <div style="position: absolute; inset: 0; background: radial-gradient(circle at 60% 40%, rgba(255,107,26,0.3) 0%, transparent 60%);"></div>
+      </div>
+      <div class="card-overlay">
+        <div class="card-region">Uttar Pradesh</div>
+        <div class="card-name">Agra</div>
+        <div class="card-desc">Home to the eternal Taj Mahal, Agra is a city where love is carved in marble. Wander through Mughal architecture and savour Agra's famous petha sweets.</div>
+        <div class="card-footer">
+          <span class="card-tag">🏛️ UNESCO Site</span>
+          <button class="explore-btn">Explore →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alleppey -->
+    <div class="dest-card" data-category="nature" onclick="openDestModal('alleppey')">
+      <div class="card-img-placeholder" style="background: linear-gradient(135deg, #0d7377, #14a085); height: 280px;">
+        <span>🌴</span>
+      </div>
+      <div class="card-overlay">
+        <div class="card-region">Kerala</div>
+        <div class="card-name">Alleppey</div>
+        <div class="card-desc">Float through emerald backwaters on a houseboat and wake up to the scent of fresh coconut chutney.</div>
+        <div class="card-footer">
+          <span class="card-tag">🚢 Houseboat Heaven</span>
+          <button class="explore-btn">Explore →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jaipur -->
+    <div class="dest-card" data-category="heritage" onclick="openDestModal('jaipur')">
+      <div class="card-img-placeholder" style="background: linear-gradient(135deg, #c0392b, #8e1c1c); height: 280px;">
+        <span>🏯</span>
+      </div>
+      <div class="card-overlay">
+        <div class="card-region">Rajasthan</div>
+        <div class="card-name">Jaipur</div>
+        <div class="card-desc">The Pink City dazzles with majestic forts, vibrant bazaars, and aromatic dal baati churma.</div>
+        <div class="card-footer">
+          <span class="card-tag">👑 Royal Rajputana</span>
+          <button class="explore-btn">Explore →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Manali -->
+    <div class="dest-card" data-category="mountain" onclick="openDestModal('manali')">
+      <div class="card-img-placeholder" style="background: linear-gradient(135deg, #2c3e50, #4a6741); height: 280px;">
+        <span>⛰️</span>
+      </div>
+      <div class="card-overlay">
+        <div class="card-region">Himachal Pradesh</div>
+        <div class="card-name">Manali</div>
+        <div class="card-desc">Snow peaks, apple orchards, and steaming thukpa bowls — Manali is a year-round escape.</div>
+        <div class="card-footer">
+          <span class="card-tag">🏔️ Mountain Magic</span>
+          <button class="explore-btn">Explore →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Goa -->
+    <div class="dest-card" data-category="beach" onclick="openDestModal('goa')">
+      <div class="card-img-placeholder" style="background: linear-gradient(135deg, #f39c12, #e74c3c); height: 280px;">
+        <span>🌊</span>
+      </div>
+      <div class="card-overlay">
+        <div class="card-region">Goa</div>
+        <div class="card-name">Goa</div>
+        <div class="card-desc">Sun-kissed beaches, Portuguese churches, and fiery fish curry — India's party capital has it all.</div>
+        <div class="card-footer">
+          <span class="card-tag">🏖️ Beach Bliss</span>
+          <button class="explore-btn">Explore →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Varanasi -->
+    <div class="dest-card" data-category="spiritual" onclick="openDestModal('varanasi')">
+      <div class="card-img-placeholder" style="background: linear-gradient(135deg, #b7791f, #744210); height: 280px;">
+        <span>🪔</span>
+      </div>
+      <div class="card-overlay">
+        <div class="card-region">Uttar Pradesh</div>
+        <div class="card-name">Varanasi</div>
+        <div class="card-desc">The spiritual soul of India — watch the Ganga aarti at dusk and feel the city's ancient pulse.</div>
+        <div class="card-footer">
+          <span class="card-tag">🕉️ Sacred Ghats</span>
+          <button class="explore-btn">Explore →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ladakh -->
+    <div class="dest-card" data-category="mountain" onclick="openDestModal('ladakh')">
+      <div class="card-img-placeholder" style="background: linear-gradient(135deg, #1e3a5f, #2d6a9f); height: 280px;">
+        <span>🏔️</span>
+      </div>
+      <div class="card-overlay">
+        <div class="card-region">Jammu &amp; Kashmir</div>
+        <div class="card-name">Ladakh</div>
+        <div class="card-desc">High-altitude desert, monasteries in the clouds, and the stillest lakes on Earth.</div>
+        <div class="card-footer">
+          <span class="card-tag">🌌 Land of Passes</span>
+          <button class="explore-btn">Explore →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coorg -->
+    <div class="dest-card" data-category="nature" onclick="openDestModal('coorg')">
+      <div class="card-img-placeholder" style="background: linear-gradient(135deg, #1a3c1a, #2d7a2d); height: 280px;">
+        <span>☕</span>
+      </div>
+      <div class="card-overlay">
+        <div class="card-region">Karnataka</div>
+        <div class="card-name">Coorg</div>
+        <div class="card-desc">Misty coffee estates, waterfalls, and Kodava cuisine in the Scotland of India.</div>
+        <div class="card-footer">
+          <span class="card-tag">🌿 Coffee Country</span>
+          <button class="explore-btn">Explore →</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOD ═══════════════════ -->
+<section class="food-section" id="food">
+  <div style="position: relative; z-index: 1;">
+    <span class="section-tag" style="color: var(--gold);">✦ Local Flavours</span>
+    <h2 class="section-title" style="color: var(--cream);">Eat Like a Local,<br/>Everywhere You Go</h2>
+    <p class="section-subtitle">India's cuisine is as diverse as its landscape. Every state has a dish that'll make your tastebuds drift.</p>
+
+    <div class="filter-tabs food-filter-tabs" id="foodFilters" role="tablist" aria-label="Filter food">
+      <button class="filter-tab active" onclick="filterFood('all', this)"    role="tab">All Dishes</button>
+      <button class="filter-tab"        onclick="filterFood('north', this)"  role="tab">North India</button>
+      <button class="filter-tab"        onclick="filterFood('south', this)"  role="tab">South India</button>
+      <button class="filter-tab"        onclick="filterFood('street', this)" role="tab">Street Food</button>
+      <button class="filter-tab"        onclick="filterFood('veg', this)"    role="tab">Vegetarian</button>
+    </div>
+
+    <div class="food-grid" id="foodGrid">
+
+      <div class="food-card" data-category="north" onclick="openFoodModal('butterchicken')">
+        <span class="food-emoji">🍛</span>
+        <div class="food-name">Butter Chicken</div>
+        <div class="food-origin">Punjab · North India</div>
+        <div class="food-desc">The world's most loved Indian dish — velvety tomato gravy with tender chicken.</div>
+        <div class="spice-rating">
+          <span class="chili">🌶️</span>
+          <span class="chili">🌶️</span>
+          <span class="chili" style="opacity:0.3">🌶️</span>
+        </div>
+      </div>
+
+      <div class="food-card" data-category="south" onclick="openFoodModal('fishcurry')">
+        <span class="food-emoji">🦞</span>
+        <div class="food-name">Fish Curry</div>
+        <div class="food-origin">Goa · West Coast</div>
+        <div class="food-desc">Tangy coconut-based curry with fresh catch — eaten with steamed rice by the sea.</div>
+        <div class="spice-rating">
+          <span class="chili">🌶️</span>
+          <span class="chili">🌶️</span>
+          <span class="chili">🌶️</span>
+        </div>
+      </div>
+
+      <div class="food-card" data-category="north veg" onclick="openFoodModal('dalbaati')">
+        <span class="food-emoji">🥘</span>
+        <div class="food-name">Dal Baati Churma</div>
+        <div class="food-origin">Rajasthan · Northwest</div>
+        <div class="food-desc">Hard wheat rolls dunked in rich lentils with a sweet crumble — the taste of the desert.</div>
+        <div class="spice-rating">
+          <span class="chili">🌶️</span>
+          <span class="chili" style="opacity:0.3">🌶️</span>
+          <span class="chili" style="opacity:0.3">🌶️</span>
+        </div>
+      </div>
+
+      <div class="food-card" data-category="north" onclick="openFoodModal('thukpa')">
+        <span class="food-emoji">🍜</span>
+        <div class="food-name">Thukpa</div>
+        <div class="food-origin">Ladakh · Himalayas</div>
+        <div class="food-desc">A warming Tibetan noodle soup perfect for sub-zero nights in the mountains.</div>
+        <div class="spice-rating">
+          <span class="chili">🌶️</span>
+          <span class="chili" style="opacity:0.3">🌶️</span>
+          <span class="chili" style="opacity:0.3">🌶️</span>
+        </div>
+      </div>
+
+      <div class="food-card" data-category="south" onclick="openFoodModal('biryani')">
+        <span class="food-emoji">🍲</span>
+        <div class="food-name">Hyderabadi Biryani</div>
+        <div class="food-origin">Telangana · South</div>
+        <div class="food-desc">Slow-cooked basmati and spiced meat sealed in a clay pot — a Nizam-era legacy.</div>
+        <div class="spice-rating">
+          <span class="chili">🌶️</span>
+          <span class="chili">🌶️</span>
+          <span class="chili">🌶️</span>
+        </div>
+      </div>
+
+      <div class="food-card" data-category="south veg" onclick="openFoodModal('sadya')">
+        <span class="food-emoji">🍱</span>
+        <div class="food-name">Sadya</div>
+        <div class="food-origin">Kerala · South</div>
+        <div class="food-desc">A grand vegetarian feast on banana leaf with 26+ dishes — eaten with your hands.</div>
+        <div class="spice-rating">
+          <span class="chili">🌶️</span>
+          <span class="chili">🌶️</span>
+          <span class="chili" style="opacity:0.3">🌶️</span>
+        </div>
+      </div>
+
+      <div class="food-card" data-category="street" onclick="openFoodModal('momos')">
+        <span class="food-emoji">🥟</span>
+        <div class="food-name">Momos</div>
+        <div class="food-origin">Sikkim · Northeast</div>
+        <div class="food-desc">Steamed dumplings stuffed with spiced veggies or meat. The streets of Gangtok smell of these.</div>
+        <div class="spice-rating">
+          <span class="chili">🌶️</span>
+          <span class="chili">🌶️</span>
+          <span class="chili" style="opacity:0.3">🌶️</span>
+        </div>
+      </div>
+
+      <div class="food-card" data-category="street veg" onclick="openFoodModal('panipuri')">
+        <span class="food-emoji">🍡</span>
+        <div class="food-name">Pani Puri</div>
+        <div class="food-origin">Pan-India · Streetside</div>
+        <div class="food-desc">Crispy shells burst with spiced tamarind water. India's most universally loved street snack.</div>
+        <div class="spice-rating">
+          <span class="chili">🌶️</span>
+          <span class="chili">🌶️</span>
+          <span class="chili">🌶️</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ EXPERIENCES ═══════════════════ -->
+<section class="experiences" id="experiences">
+  <span class="section-tag">✦ Experiences</span>
+  <h2 class="section-title">More Than Just<br/>a Destination</h2>
+  <p class="section-subtitle">Desi Drift curates experiences that go beyond sightseeing — feel the culture, taste the tradition.</p>
+
+  <div class="exp-grid">
+
+    <div class="exp-card" onclick="openExpModal('foodwalk')">
+      <div class="exp-icon" style="background: #FFF0E0;">🍽️</div>
+      <div class="exp-content">
+        <h3>Food Walks</h3>
+        <p>Guided street food trails in each city — from Chandni Chowk's parathas to Mumbai's vada pav. Meet the vendors, know the stories.</p>
+        <button class="exp-learn-btn">Learn More →</button>
+      </div>
+    </div>
+
+    <div class="exp-card" onclick="openExpModal('offbeat')">
+      <div class="exp-icon" style="background: #E0F7F7;">🏕️</div>
+      <div class="exp-content">
+        <h3>Off-Beat Trails</h3>
+        <p>We unearth hidden gems — lesser-known villages, uncharted valleys, and local homestays that big tourism misses entirely.</p>
+        <button class="exp-learn-btn">Learn More →</button>
+      </div>
+    </div>
+
+    <div class="exp-card" onclick="openExpModal('cultural')">
+      <div class="exp-icon" style="background: #F0E0FF;">🎭</div>
+      <div class="exp-content">
+        <h3>Cultural Immersion</h3>
+        <p>Attend a Kathakali in Kerala, Bihu festival in Assam, or Pushkar fair in Rajasthan — live the culture, don't just observe it.</p>
+        <button class="exp-learn-btn">Learn More →</button>
+      </div>
+    </div>
+
+    <div class="exp-card" onclick="openExpModal('itinerary')">
+      <div class="exp-icon" style="background: #FFF8E0;">🗺️</div>
+      <div class="exp-content">
+        <h3>Custom Itineraries</h3>
+        <p>Tell us your vibe — adventure, spirituality, food, nature — and Desi Drift builds your perfect Indian road trip.</p>
+        <button class="exp-learn-btn">Learn More →</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════ PLAN TRIP ═══════════════════ -->
+<section id="plan">
+  <span class="section-tag">✦ Plan Your Trip</span>
+  <h2 class="section-title">Start Your Drift</h2>
+  <p class="section-subtitle">Fill in a few details and we'll craft your perfect Indian itinerary.</p>
+
+  <div class="planner-wrap">
+    <div id="plannerForm">
+      <h3>🗺️ Tell Us Your Dream Trip</h3>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="planName">Your Name</label>
+          <input type="text"   id="planName"  placeholder="Arjun Sharma" />
+        </div>
+        <div class="form-group">
+          <label for="planEmail">Email</label>
+          <input type="email"  id="planEmail" placeholder="arjun@example.com" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="planDest">Destination</label>
+          <select id="planDest">
+            <option value="">Choose a destination...</option>
+            <option>Agra &amp; the Golden Triangle</option>
+            <option>Kerala Backwaters</option>
+            <option>Rajasthan Royal Circuit</option>
+            <option>Himachal Pradesh Mountains</option>
+            <option>Goa Beach Holiday</option>
+            <option>Varanasi Spiritual Tour</option>
+            <option>Ladakh Adventure</option>
+            <option>Northeast Discovery</option>
+            <option>South India Temple Trail</option>
+            <option>Custom Route</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="planStyle">Travel Style</label>
+          <select id="planStyle">
+            <option value="">Select style...</option>
+            <option>Budget Backpacker</option>
+            <option>Mid-Range Comfort</option>
+            <option>Luxury &amp; Heritage</option>
+            <option>Adventure &amp; Trekking</option>
+            <option>Food &amp; Culture</option>
+            <option>Spiritual Journey</option>
+            <option>Family Trip</option>
+            <option>Honeymoon</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="planDate">Travel Dates</label>
+          <input type="date"   id="planDate" />
+        </div>
+        <div class="form-group">
+          <label for="planDays">Duration (Days)</label>
+          <input type="number" id="planDays"  placeholder="7" min="1" max="60" />
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 0;">
+        <label for="planNotes">Special Requests</label>
+        <textarea id="planNotes" placeholder="Any dietary needs, accessibility requirements, must-see spots, budget..."></textarea>
+      </div>
+
+      <button class="plan-submit-btn" onclick="submitPlan()">✦ Plan My Drift</button>
+    </div>
+
+    <!-- Success state -->
+    <div class="plan-success" id="planSuccess">
+      <div class="check">🎉</div>
+      <h4>Your Drift is Being Planned!</h4>
+      <p id="planSuccessMsg">We've received your details and will send a custom itinerary to your email within 24 hours. Get ready to drift!</p>
+      <button class="btn-primary" style="margin-top: 24px;" onclick="resetPlanner()">Plan Another Trip</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CTA ═══════════════════ -->
+<section class="cta-section">
+  <h2>Ready to Start Drifting?</h2>
+  <p>Get personalised travel guides, hidden food spots, and local tips delivered to you.</p>
+  <div class="cta-input-group" id="ctaGroup">
+    <input type="email" id="ctaEmail" placeholder="Enter your email address..." aria-label="Email address for newsletter" />
+    <button onclick="ctaSubscribe()">GET STARTED</button>
+  </div>
+  <div class="cta-thanks" id="ctaThanks" role="status">🎉 You're in! Welcome to the Desi Drift family. Watch your inbox!</div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">Desi<span style="color: var(--saffron);">Drift</span></span>
+      <p>Your guide to discovering the real India — its places, people, and plates. Every drift tells a new story.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a onclick="filterAndScroll('heritage')">Rajasthan</a></li>
+        <li><a onclick="filterAndScroll('nature')">Kerala</a></li>
+        <li><a onclick="filterAndScroll('mountain')">Himachal</a></li>
+        <li><a onclick="filterAndScroll('beach')">Goa</a></li>
+        <li><a onclick="filterAndScroll('all')">Northeast</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Food Guides</h4>
+      <ul>
+        <li><a onclick="filterFoodAndScroll('north')">North Indian</a></li>
+        <li><a onclick="filterFoodAndScroll('south')">South Indian</a></li>
+        <li><a onclick="filterFoodAndScroll('street')">Street Food</a></li>
+        <li><a onclick="filterFoodAndScroll('veg')">Vegetarian</a></li>
+        <li><a onclick="filterFoodAndScroll('all')">Sweets</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a onclick="scrollToSection('plan')">About Us</a></li>
+        <li><a onclick="scrollToSection('plan')">Contribute</a></li>
+        <li><a onclick="showToast('Blog coming soon! 📝')">Blog</a></li>
+        <li><a onclick="scrollToSection('plan')">Contact</a></li>
+        <li><a onclick="showToast('Privacy policy updated 🔒')">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 Desi Drift. Made with 🧡 for wanderers of Bharat.</p>
+  </div>
+</footer>
+
+<!-- ═══════════════════ MODAL ═══════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)" role="dialog" aria-modal="true" aria-labelledby="modalName">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="closeModalDirect()" aria-label="Close modal">✕</button>
+    <div class="modal-hero"       id="modalHero"></div>
+    <div class="modal-body">
+      <div class="modal-region"   id="modalRegion"></div>
+      <div class="modal-name"     id="modalName"></div>
+      <div class="modal-desc"     id="modalDesc"></div>
+      <div class="modal-highlights" id="modalHighlights"></div>
+      <div class="modal-btns">
+        <button class="btn-primary" onclick="scrollToSection('plan'); closeModalDirect()">Plan This Trip →</button>
+        <button class="btn-outline"  style="color: var(--deep); border-color: rgba(26,10,0,0.2);" onclick="closeModalDirect()">Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TOAST ═══════════════════ -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Script -->
+<script src="assets/script.js"></script>
+</body>
+</html>
